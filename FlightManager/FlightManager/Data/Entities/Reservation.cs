@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlightManager.Data.Entitites
+namespace FlightManager.Data.Entities
 {
     public class Reservation
     {
