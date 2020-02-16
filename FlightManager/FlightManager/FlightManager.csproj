@@ -16,7 +16,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Data\Entitites\" />
     <Folder Include="Services\Contracts\" />
   </ItemGroup>
 
