@@ -1,4 +1,4 @@
-﻿using FlightManager.Data.Entitites;
+﻿using FlightManager.Data.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
