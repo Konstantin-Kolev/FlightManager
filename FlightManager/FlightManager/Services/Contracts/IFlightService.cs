@@ -4,25 +4,26 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FlightManager.Data.Entities;
+using FlightManager.Models.Flight;
 
 namespace FlightManager.Services.Contracts
 {
     interface IFlightService
     {
 
-        IQueryable<Flight> GetAllFlights();
+        IQueryable<FlightViewModel> GetAllFlights();
 
-        IQueryable<Flight> GetAllFlights(Expression<Func<Flight, bool>> predicate);
+        IQueryable<FlightViewModel> GetAllFlights(Expression<Func<Flight, bool>> predicate);
 
         Flight GetOneFlight(int id);
 
         Flight GetOneFlight(Expression<Func<Flight, bool>> predicate);
 
-        void AddFlight(Flight entity);
+        void AddFlight(FlightInputModel model);
 
-        void UpdateFlight(Flight entity);
+        void UpdateFlight(FlightEditInputModel model);
 
-        void RemoveFlight(Flight entity);
+        void RemoveFlight(int id);
 
     }
 }
