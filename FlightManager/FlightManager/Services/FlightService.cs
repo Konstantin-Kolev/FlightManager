@@ -4,6 +4,7 @@ using FlightManager.Models.Flight;
 using FlightManager.Services.Contracts;
 using FlightManager.Services.Mappings;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -25,12 +26,12 @@ namespace FlightManager.Services
             context.SaveChanges();
         }
 
-        public IQueryable<FlightViewModel> GetAllFlights()
+        public IEnumerable<FlightViewModel> GetAllFlights()
         {
             return context.Flights.Select(x => x.To<FlightViewModel>());
         }
 
-        public IQueryable<FlightViewModel> GetAllFlights(Expression<Func<Flight, bool>> predicate)
+        public IEnumerable<FlightViewModel> GetAllFlights(Expression<Func<Flight, bool>> predicate)
         {
             return context.Flights.Where(predicate).Select(x => x.To<FlightViewModel>());
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlightManager.Models.Flight
 {
-    public class FlightViewModel : IMapFrom<Data.Entities.Flight>
+    public class FlightDetailsViewModel : IMapFrom<Data.Entities.Flight>
     {
         public string Origin { get; set; }
 
@@ -16,9 +16,14 @@ namespace FlightManager.Models.Flight
 
         public DateTime LandingTime { get; set; }
 
+        public string PlaneType { get; set; }
+
+        public string PlaneNumber { get; set; }
+
+        public string PilotName { get; set; }
+
         public int AvailableSeats { get; set; }
 
         public int AvailableBussines { get; set; }
-
     }
 }
