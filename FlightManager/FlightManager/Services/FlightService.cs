@@ -43,7 +43,7 @@ namespace FlightManager.Services
 
         public Flight GetOneFlight(Expression<Func<Flight, bool>> predicate)
         {
-            return context.Flights.Find(predicate);
+            return context.Flights.FirstOrDefault(predicate);
         }
 
         public void RemoveFlight(int id)
