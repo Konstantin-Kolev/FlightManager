@@ -4,23 +4,24 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using FlightManager.Data.Entities;
+using FlightManager.Models.Reservation;
 
 namespace ReservationManager.Services.Contracts
 {
     interface IReservationService
     {
-        IQueryable<Reservation> GetAllReservations();
+        IEnumerable<ReservationViewModel> GetAllReservations();
 
-        IQueryable<Reservation> GetAllReservations(Expression<Func<Reservation, bool>> predicate);
+        IEnumerable<ReservationViewModel> GetAllReservations(Expression<Func<Reservation, bool>> predicate);
 
         Reservation GetOneReservation(int id);
 
         Reservation GetOneReservation(Expression<Func<Reservation, bool>> predicate);
 
-        void AddReservation(Reservation entity);
+        void AddReservation(ReservationInputModel model);
 
-        void UpdateReservation(Reservation entity);
+        void UpdateReservation(ReservationEditInputModel model);
 
-        void RemoveReservation(Reservation entity);
+        void RemoveReservation(int id);
     }
 }

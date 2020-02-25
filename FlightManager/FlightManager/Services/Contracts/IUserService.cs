@@ -8,7 +8,7 @@ namespace FlightManager.Services.Contracts
 {
     interface IUserService
     {
-        IQueryable<User> GetAllUsers();
+        IEnumerable<User> GetAllUsers();
 
         User GetOneUser(int id);
 
