@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using FlightManager.Services.Mappings;
 using FlightManager.Models;
 using System.Reflection;
+using FlightManager.Data.Seeding;
 
 namespace FlightManager
 {
@@ -42,6 +43,18 @@ namespace FlightManager
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            using (IServiceScope serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<FlightManagerDbContext>();
+
+                if (env.IsDevelopment())
+                {
+                    dbContext.Database.Migrate();
+                }
+
+                new FlightManagerDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            }
 
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
