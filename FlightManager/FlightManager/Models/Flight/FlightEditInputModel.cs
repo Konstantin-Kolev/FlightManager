@@ -1,11 +1,12 @@
-﻿using System;
+﻿using FlightManager.Services.Mappings;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlightManager.Data.Entities
+namespace FlightManager.Models.Flight
 {
-    public class Flight
+    public class FlightEditInputModel : IMapTo<Data.Entities.Flight>, IMapFrom<Data.Entities.Flight>
     {
         public int FlightId { get; set; }
 
@@ -26,7 +27,5 @@ namespace FlightManager.Data.Entities
         public int AvailableEconomy { get; set; }
 
         public int AvailableBussines { get; set; }
-
-        public List<Reservation> Reservations { get; set; }
     }
 }

@@ -1,15 +1,14 @@
 ﻿using FlightManager.Data.Enumeration;
+using FlightManager.Services.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlightManager.Data.Entities
+namespace FlightManager.Models.Reservation
 {
-    public class Reservation
+    public class ReservationInputModel : IMapTo<Data.Entities.Reservation>
     {
-        public int ReservationId { get; set; }
-
         public string Name { get; set; }
 
         public string MiddleName { get; set; }
@@ -29,7 +28,5 @@ namespace FlightManager.Data.Entities
         public string Buyer { get; set; }
 
         public int FlightId { get; set; }
-
-        public Flight Flight { get; set; }
     }
 }
