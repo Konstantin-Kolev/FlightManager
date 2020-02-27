@@ -7,7 +7,7 @@ using FlightManager.Models.Flight;
 
 namespace FlightManager.Services.Contracts
 {
-    interface IFlightService
+    public interface IFlightService
     {
 
         IEnumerable<FlightViewModel> GetAllFlights();

@@ -8,7 +8,7 @@ using FlightManager.Models.Reservation;
 
 namespace ReservationManager.Services.Contracts
 {
-    interface IReservationService
+    public interface IReservationService
     {
         IEnumerable<ReservationViewModel> GetAllReservations();
 
