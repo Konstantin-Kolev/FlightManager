@@ -21,7 +21,7 @@ namespace FlightManager.Data.Seeding
                 throw new ArgumentNullException(nameof(serviceProvider));
             }
 
-            var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger(typeof(FlightManagerDbContextSeeder));
+            ILogger logger = serviceProvider.GetService<ILoggerFactory>().CreateLogger(typeof(FlightManagerDbContextSeeder));
 
             var seeders = new List<ISeeder>
                           {
@@ -29,7 +29,7 @@ namespace FlightManager.Data.Seeding
                               new AdminSeeder()
                           };
 
-            foreach (var seeder in seeders)
+            foreach (ISeeder seeder in seeders)
             {
                 await seeder.SeedAsync(dbContext, serviceProvider);
                 await dbContext.SaveChangesAsync();
