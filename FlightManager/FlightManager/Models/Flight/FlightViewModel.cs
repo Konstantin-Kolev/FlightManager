@@ -8,7 +8,7 @@ namespace FlightManager.Models.Flight
 {
     public class FlightViewModel : IMapFrom<Data.Entities.Flight>
     {
-        public int FlightId { get; set; }
+        public int Id { get; set; }
 
         public string Origin { get; set; }
 
@@ -16,11 +16,7 @@ namespace FlightManager.Models.Flight
 
         public DateTime TakeOffTime { get; set; }
 
-        public DateTime LandingTime { get; set; }
-
-        public int AvailableEconomy { get; set; }
-
-        public int AvailableBussines { get; set; }
+        public TimeSpan Duration { get; set; }
 
         public string PlaneNumber { get; set; }
 

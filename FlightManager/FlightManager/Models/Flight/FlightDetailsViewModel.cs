@@ -1,4 +1,5 @@
-﻿using FlightManager.Services.Mappings;
+﻿using FlightManager.Models.Reservation;
+using FlightManager.Services.Mappings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,19 +7,9 @@ using System.Threading.Tasks;
 
 namespace FlightManager.Models.Flight
 {
-    public class FlightDetailsViewModel : IMapFrom<Data.Entities.Flight>
-    {
-        public string Origin { get; set; }
-
-        public string Destination { get; set; }
-
-        public DateTime TakeOffTime { get; set; }
-
-        public DateTime LandingTime { get; set; }
-
+    public class FlightDetailsViewModel : FlightViewModel
+    {  
         public string PlaneType { get; set; }
-
-        public string PlaneNumber { get; set; }
 
         public string PilotName { get; set; }
 
@@ -26,6 +17,6 @@ namespace FlightManager.Models.Flight
 
         public int AvailableBussines { get; set; }
 
-        public List<Data.Entities.Reservation> Reservations { get; set; }
+        public ICollection<ReservationViewModel> Reservations { get; set; }
     }
 }

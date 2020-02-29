@@ -18,17 +18,11 @@ namespace FlightManager.Controllers
             this.flightService = flightService;
         }
 
-        public IActionResult All()
-        {
-            IEnumerable<FlightViewModel> flights = flightService.GetAllFlights();
-
-            return View(flights);
-        }
+        public IActionResult All() => View(flightService.All());
 
         public IActionResult Details(int id)
         {
-            FlightDetailsViewModel model = flightService.GetOneFlight(id).To<FlightDetailsViewModel>();
-
+            FlightDetailsViewModel model = flightService.GetById<FlightDetailsViewModel>(id);
             return View(model);
         }
     }

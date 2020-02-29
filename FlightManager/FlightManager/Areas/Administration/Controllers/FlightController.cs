@@ -19,44 +19,57 @@ namespace FlightManager.Areas.Administration.Controllers
             this.flightService = flightService;
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() => View();
 
         [HttpPost]
         public  async Task<IActionResult> Create(FlightInputModel model)
         {
-            await flightService.AddFlight(model);
-            return Redirect("/");
+            if (model.LandingTime < DateTime.Now)
+            {
+                ModelState.AddModelError(nameof(FlightInputModel.LandingTime), "Landing time must be in the future!");
+            }
+            if (model.TakeOffTime < DateTime.Now)
+            {
+                ModelState.AddModelError(nameof(FlightInputModel.LandingTime), "Take off time must be in the future!");
+            }
+            if (model.LandingTime < model.TakeOffTime)
+            {
+                ModelState.AddModelError(nameof(FlightInputModel.TakeOffTime), "Take off time must be before landing time!");
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await flightService.Create(model);
+            return Redirect("/Flight/All");
         }
 
         public IActionResult Edit(int id)
         {
-            FlightEditInputModel model = flightService.GetOneFlight(id).To<FlightEditInputModel>();
+            FlightInputModel model = flightService.GetById<FlightInputModel>(id);
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(FlightEditInputModel model,int id)
+        public async Task<IActionResult> Edit(FlightInputModel model,int id)
         {
-            await flightService.UpdateFlight(model,id);
-
-            return Redirect("/");
+            await flightService.Update(model, id);
+            return Redirect("/Flight/All");
         }
 
         public IActionResult Delete(int id)
         {
-            FlightDetailsViewModel model = flightService.GetOneFlight(id).To<FlightDetailsViewModel>();
+            FlightDetailsViewModel model = flightService.GetById<FlightDetailsViewModel>(id);
             return View(model);
         }
 
         [HttpPost]
         [ActionName(nameof(Delete))]
-        public async Task<IActionResult> DeleteConfirm(int id)
+        public IActionResult DeleteConfirm(int id)
         {
-            await flightService.RemoveFlight(id);
-            return Redirect("/");
+            flightService.Delete(id);
+            return Redirect("/Flight/All");
         }
     }
 }
