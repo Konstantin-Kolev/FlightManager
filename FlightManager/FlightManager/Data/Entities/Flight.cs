@@ -32,7 +32,7 @@ namespace FlightManager.Data.Entities
 
         public int AvailableEconomy { get; set; }
 
-        public int AvailableBussines { get; set; }
+        public int AvailableBusiness { get; set; }
 
         public ICollection<Reservation> Reservations { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using FlightManager.Services.Mappings;
+﻿using AutoMapper;
+using FlightManager.Services.Mappings;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FlightManager.Models.Flight
 {
-    public class FlightInputModel : IMapTo<Data.Entities.Flight>
+    public class FlightInputModel : IMapTo<Data.Entities.Flight>, IHaveCustomMappings
     {
         [Required]
         public string Origin { get; set; }
@@ -30,6 +31,17 @@ namespace FlightManager.Models.Flight
 
         public int AvailableEconomy { get; set; }
 
-        public int AvailableBussines { get; set; }
+        public int AvailableBusiness { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<FlightInputModel, Data.Entities.Flight>()
+                .ForMember(m => m.Destination, y => y.Ignore())
+                .ForMember(m => m.Origin, y => y.Ignore());
+
+            configuration.CreateMap<Data.Entities.Flight, FlightInputModel>()
+                .ForMember(m => m.Origin, y => y.MapFrom(f => f.Origin.Name))
+                .ForMember(m => m.Destination, y => y.MapFrom(f => f.Destination.Name));
+        }
     }
 }

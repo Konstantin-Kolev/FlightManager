@@ -1,4 +1,5 @@
-﻿using FlightManager.Data.Enumeration;
+﻿using AutoMapper;
+using FlightManager.Data.Enumeration;
 using FlightManager.Services.Mappings;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FlightManager.Models.Reservation
 {
-    public class ReservationInputModel : IMapTo<Data.Entities.Reservation>
+    public class ReservationInputModel : IMapTo<Data.Entities.Reservation> ,IHaveCustomMappings
     {
         public ReservationInputModel()
         {
@@ -19,5 +20,9 @@ namespace FlightManager.Models.Reservation
         public int FlightId { get; set; }
 
         public List<ReservationPassengerInputModel> Passengers { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration) =>
+            configuration.CreateMap<ReservationInputModel, Data.Entities.Reservation>()
+            .ForMember(m => m.Passengers, y => y.Ignore());
     }
 }

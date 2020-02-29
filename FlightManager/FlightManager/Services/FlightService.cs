@@ -25,7 +25,7 @@ namespace FlightManager.Services
 
         public int AvailableBussinesTickets(int flightId) =>
             context.Flights.Where(f => f.Id == flightId)
-            .Select(f => f.AvailableBussines)
+            .Select(f => f.AvailableBusiness)
             .FirstOrDefault();
 
         public int AvailableEconomyTickets(int flightId) =>
@@ -60,7 +60,7 @@ namespace FlightManager.Services
             Flight flight = context.Flights.Find(id);
             flight.Origin = GetFlightLocation(model.Origin);
             flight.Destination = GetFlightLocation(model.Destination);
-            flight.AvailableBussines = model.AvailableBussines;
+            flight.AvailableBusiness = model.AvailableBusiness;
             flight.AvailableEconomy = model.AvailableEconomy;
             flight.LandingTime = model.LandingTime;
             flight.PilotName = model.PilotName;
@@ -72,11 +72,11 @@ namespace FlightManager.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAvailableTickets(int flightId, int ecenomyTickets, int bussinesTickets)
+        public async Task UpdateAvailableTickets(int flightId, int ecenomyTickets, int businessTickets)
         {
             Flight flight = context.Flights.Find(flightId);
             flight.AvailableEconomy -= ecenomyTickets;
-            flight.AvailableBussines -= bussinesTickets;
+            flight.AvailableBusiness -= businessTickets;
 
             context.Flights.Update(flight);
             await context.SaveChangesAsync();
