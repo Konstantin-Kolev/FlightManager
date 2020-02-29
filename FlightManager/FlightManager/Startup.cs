@@ -15,6 +15,8 @@ using Microsoft.Extensions.Hosting;
 using FlightManager.Services.Mappings;
 using FlightManager.Models;
 using System.Reflection;
+using FlightManager.Data.Seeding;
+using FlightManager.Data.Entities;
 
 namespace FlightManager
 {
@@ -33,8 +35,20 @@ namespace FlightManager
             services.AddDbContext<FlightManagerDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<FlightManagerDbContext>();
+
+            services
+              .AddIdentity<User, IdentityRole>(options =>
+              {
+                  options.Password.RequireDigit = false;
+                  options.Password.RequireLowercase = false;
+                  options.Password.RequireUppercase = false;
+                  options.Password.RequireNonAlphanumeric = false;
+                  options.Password.RequiredLength = 6;
+                  options.SignIn.RequireConfirmedEmail = false;
+              })
+              .AddEntityFrameworkStores<FlightManagerDbContext>()
+              .AddDefaultTokenProviders();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -42,6 +56,18 @@ namespace FlightManager
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            using (IServiceScope serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<FlightManagerDbContext>();
+
+                if (env.IsDevelopment())
+                {
+                    dbContext.Database.Migrate();
+                }
+
+                new FlightManagerDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            }
 
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
@@ -66,6 +92,7 @@ namespace FlightManager
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -1,4 +1,5 @@
 ﻿using FlightManager.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FlightManager.Data
 {
-    public class FlightManagerDbContext : IdentityDbContext
+    public class FlightManagerDbContext : IdentityDbContext<User, IdentityRole, string>
     {
         public FlightManagerDbContext()
         {
@@ -16,7 +17,7 @@ namespace FlightManager.Data
         }
 
         public FlightManagerDbContext(DbContextOptions<FlightManagerDbContext> options)
-            :base (options)
+            : base(options)
         {
 
         }
