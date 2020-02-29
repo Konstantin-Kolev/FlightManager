@@ -56,5 +56,11 @@ namespace FlightManager.Controllers
             //Send email to user in order to approve the reservation
             return Redirect("/");
         }
+
+        public IActionResult Details(int id)
+        {
+            ReservationViewModel model = reservationService.GetById<ReservationViewModel>(id);
+            return View(model);
+        }
     }
 }

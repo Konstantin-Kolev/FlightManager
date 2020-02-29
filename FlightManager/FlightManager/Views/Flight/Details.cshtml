@@ -53,36 +53,50 @@
                     <input asp-for="AvailableBusiness" class="form-control" disabled />
                 </div>
             </div>
-            <a class="btn btn-primary btn-lg active" role="button" asp-controller="Flight" asp-action="All">Back</a>
         </form>
     </div>
 </div>
 
-@*@if (Model.Reservations.Any())
+@if (User.IsInRole(Roles.Administrator))
 {
-    <table class="table table-striped">
-        <thead>
-            <tr class="row">
-                <th class="col-md-2">Full name</th>
-                <th class="col-md-2">Email</th>
-                <th class="col-md-2">Personal number</th>
-                <th class="col-md-2">Phone number</th>
-                <th class="col-md-2">Nationality</th>
-                <th class="col-md-2">Ticket type</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var reservation in Model.Reservations)
-            {
+    <h2>Reservations for this flight</h2>
+    @if (Model.Reservations.Any())
+    {
+        <table class="table table-striped table-sm">
+            <thead>
                 <tr class="row">
-                    <td class="col-md-2">@reservation.FullName</td>
-                    <td class="col-md-2">@reservation.Email</td>
-                    <td class="col-md-2">@reservation.PersonalNumber</td>
-                    <td class="col-md-2">@reservation.PhoneNumber</td>
-                    <td class="col-md-2">@reservation.Nationality</td>
-                    <td class="col-md-2">@reservation.TicketType</td>
+                    <th class="col-md-2">Name</th>
+                    <th class="col-md-2">Surname</th>
+                    <th class="col-md-2">Email</th>
+                    <th class="col-md-2">Nationality</th>
+                    <th class="col-md-2">Ticket type</th>
+                    <th class="col-md-2">Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}*@
+            </thead>
+            <tbody>
+                @foreach (var reservation in Model.Reservations)
+                {
+                    <tr class="row">
+                        @foreach (var passenger in reservation.Passengers)
+                        {
+                        <td class="col-md-2">@passenger.Name</td>
+                        <td class="col-md-2">@passenger.Surname</td>
+                        <td class="col-md-2">@passenger.Email</td>
+                        <td class="col-md-2">@passenger.Nationality</td>
+                        <td class="col-md-2">@passenger.TicketType</td>
+                        }
+                        <td class="col-md-2">
+                            <a class="btn btn-primary btn-sm" role="button"
+                               asp-controller="Reservation"
+                               asp-action="Details"
+                               asp-route-id="@reservation.Id">
+                                Reservation Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+<a class="btn btn-primary active" role="button" asp-controller="Flight" asp-action="All">Back</a>

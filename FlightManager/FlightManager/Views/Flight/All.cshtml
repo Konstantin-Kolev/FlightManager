@@ -38,19 +38,25 @@
                         @if (User.IsInRole(Roles.Administrator))
                         {
                             <td class="col-md-3">
-                                <a class="btn btn-outline-primary mx-3"
+                                <a class="btn btn-outline-primary btn-sm mx-3"
                                    asp-area="@AdministrationArea"
                                    asp-controller="Flight"
                                    asp-action="Edit"
                                    asp-route-id="@flight.Id">
                                     Edit
                                 </a>
-                                <a class="btn btn-outline-danger"
+                                <a class="btn btn-outline-danger btn-sm"
                                    asp-area="@AdministrationArea"
                                    asp-controller="Flight"
                                    asp-action="Delete"
                                    asp-route-id="@flight.Id">
                                     Delete
+                                </a>
+                                <a class="btn btn-outline-primary btn-sm mx-3"
+                                   asp-controller="Flight"
+                                   asp-action="Details"
+                                   asp-route-Id="@flight.Id">
+                                    Details
                                 </a>
                             </td>
                         }
