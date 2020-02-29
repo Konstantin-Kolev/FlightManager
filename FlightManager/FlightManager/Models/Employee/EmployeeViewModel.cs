@@ -9,7 +9,7 @@ namespace FlightManager.Models.Employee
 {
     public class EmployeeViewModel : IMapFrom<User>
     {
-        public string UserId { get; set; }
+        public string Id { get; set; }
 
         public string Username { get; set; }
 

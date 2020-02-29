@@ -35,7 +35,7 @@
                                asp-area="@AdministrationArea"
                                asp-controller="Employee"
                                asp-action="Details"
-                               asp-route-id="@employee.UserId">
+                               asp-route-id="@employee.Id">
                                 @employee.Username
                             </a>
                         </td>
@@ -47,14 +47,14 @@
                                asp-area="@AdministrationArea"
                                asp-controller="Employee"
                                asp-action="Edit"
-                               asp-route-id="@employee.UserId">
+                               asp-route-id="@employee.Id">
                                 Edit
                             </a>
                             <a class="btn btn-outline-danger"
                                asp-area="@AdministrationArea"
                                asp-controller="Employee"
                                asp-action="Delete"
-                               asp-route-id="@employee.UserId">
+                               asp-route-id="@employee.Id">
                                 Delete
                             </a>
                         </td>

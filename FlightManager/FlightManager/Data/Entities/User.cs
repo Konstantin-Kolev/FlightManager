@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 namespace FlightManager.Data.Entities
 {
     public class User : IdentityUser
-    {
-        public int UserId { get; set; }
-
+    { 
         public string Password { get; set; }
 
         public string Name { get; set; }
