@@ -9,7 +9,7 @@ namespace FlightManager.Data.Entities
     public class User : IdentityUser
     { 
         public string Password { get; set; }
-
+        
         public string Name { get; set; }
 
         public string Surname { get; set; }

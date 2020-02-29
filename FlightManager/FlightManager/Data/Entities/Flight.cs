@@ -23,7 +23,7 @@ namespace FlightManager.Data.Entities
 
         public string PilotName { get; set; }
 
-        public int AvailableSeats { get; set; }
+        public int AvailableEconomy { get; set; }
 
         public int AvailableBussines { get; set; }
 

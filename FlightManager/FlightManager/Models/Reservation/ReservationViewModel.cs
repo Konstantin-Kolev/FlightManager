@@ -9,9 +9,9 @@ namespace FlightManager.Models.Reservation
 {
     public class ReservationViewModel: IMapFrom<Data.Entities.Reservation>
     {
-        public string FirstName { get; set; }
+        public string Name { get; set; }
 
-        public string LastName { get; set; }
+        public string Surname { get; set; }
 
         public string Nationality { get; set; }
 
