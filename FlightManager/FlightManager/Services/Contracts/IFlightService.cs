@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using FlightManager.Data.Entities;
 using FlightManager.Models.Flight;
 
@@ -18,11 +19,11 @@ namespace FlightManager.Services.Contracts
 
         Flight GetOneFlight(Expression<Func<Flight, bool>> predicate);
 
-        void AddFlight(FlightInputModel model);
+        Task AddFlight(FlightInputModel model);
 
-        void UpdateFlight(FlightEditInputModel model);
+        Task UpdateFlight(FlightEditInputModel model);
 
-        void RemoveFlight(int id);
+        Task RemoveFlight(int id);
 
     }
 }

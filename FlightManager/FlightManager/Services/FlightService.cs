@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace FlightManager.Services
 {
@@ -19,11 +20,11 @@ namespace FlightManager.Services
             this.context = context;
         }
 
-        public void AddFlight(FlightInputModel model)
+        public async Task AddFlight(FlightInputModel model)
         {
             var flight = model.To<Flight>();
-            context.Flights.Add(flight);
-            context.SaveChanges();
+            await context.Flights.AddAsync(flight);
+            await context.SaveChangesAsync();
         }
 
         public IEnumerable<FlightViewModel> GetAllFlights()
@@ -46,18 +47,18 @@ namespace FlightManager.Services
             return context.Flights.FirstOrDefault(predicate);
         }
 
-        public void RemoveFlight(int id)
+        public async Task RemoveFlight(int id)
         {
             Flight flight = context.Flights.Find(id);
             context.Flights.Remove(flight);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void UpdateFlight(FlightEditInputModel model)
+        public async Task UpdateFlight(FlightEditInputModel model)
         {
             Flight flight = model.To<Flight>();
             context.Flights.Update(flight);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
