@@ -11,8 +11,6 @@ namespace FlightManager.Data.Seeding
 {
     public class AdminSeeder : ISeeder
     {
-        public object Admin { get; private set; }
-
         public async Task SeedAsync(FlightManagerDbContext dbContext, IServiceProvider serviceProvider)
         {
             UserManager<User> userManager = serviceProvider.GetRequiredService<UserManager<User>>();

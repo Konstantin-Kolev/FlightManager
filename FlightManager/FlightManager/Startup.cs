@@ -36,9 +36,6 @@ namespace FlightManager
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<FlightManagerDbContext>();
-
             services
               .AddIdentity<User, IdentityRole>(options =>
               {

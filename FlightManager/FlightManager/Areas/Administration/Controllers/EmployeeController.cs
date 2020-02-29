@@ -59,13 +59,15 @@ namespace FlightManager.Areas.Administration.Controllers
         public async Task<IActionResult> Edit(EmployeeEditInputModel model)
         {
             User user = await userManager.FindByIdAsync(model.Id);
-            user.Email = model.Email;
-            user.UserName = model.Username;
-            user.Address = model.Address;
-            user.Name = model.Name;
-            user.Surname = model.Surname;
-            user.PhoneNumber = model.PhoneNumber;
-            user.PersonalNumber = model.PersonalNumber;
+            //user.Email = model.Email;
+            //user.UserName = model.Username;
+            //user.Address = model.Address;
+            //user.Name = model.Name;
+            //user.Surname = model.Surname;
+            //user.PhoneNumber = model.PhoneNumber;
+            //user.PersonalNumber = model.PersonalNumber;
+
+            user = model.To<User>();
 
             await userManager.UpdateAsync(user);
             return RedirectToAction(nameof(Details), new { model.Id });
