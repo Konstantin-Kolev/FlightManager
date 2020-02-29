@@ -20,11 +20,11 @@ namespace FlightManager.Services
             this.context = context;
         }
 
-        public void AddReservation(ReservationInputModel model)
+        public async Task AddReservation(ReservationInputModel model)
         {
             Reservation reservation = model.To<Reservation>();
-            context.Add(reservation);
-            context.SaveChanges();
+            await context.AddAsync(reservation);
+            await context.SaveChangesAsync();
         }
 
         public IEnumerable<ReservationViewModel> GetAllReservations()
@@ -47,18 +47,18 @@ namespace FlightManager.Services
             return context.Reservations.FirstOrDefault(predicate);
         }
 
-        public void RemoveReservation(int id)
+        public async Task RemoveReservation(int id)
         {
             Reservation reservation = context.Reservations.Find(id);
             context.Reservations.Remove(reservation);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
-        public void UpdateReservation(ReservationEditInputModel model)
+        public async Task UpdateReservation(ReservationEditInputModel model)
         {
             Reservation reservation = model.To<Reservation>();
             context.Reservations.Update(reservation);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }

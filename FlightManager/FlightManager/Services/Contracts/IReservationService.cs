@@ -8,7 +8,7 @@ using FlightManager.Models.Reservation;
 
 namespace ReservationManager.Services.Contracts
 {
-    interface IReservationService
+    public interface IReservationService
     {
         IEnumerable<ReservationViewModel> GetAllReservations();
 
@@ -18,10 +18,10 @@ namespace ReservationManager.Services.Contracts
 
         Reservation GetOneReservation(Expression<Func<Reservation, bool>> predicate);
 
-        void AddReservation(ReservationInputModel model);
+        Task AddReservation(ReservationInputModel model);
 
-        void UpdateReservation(ReservationEditInputModel model);
+        Task UpdateReservation(ReservationEditInputModel model);
 
-        void RemoveReservation(int id);
+        Task RemoveReservation(int id);
     }
 }
