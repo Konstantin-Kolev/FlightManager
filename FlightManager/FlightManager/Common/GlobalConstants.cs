@@ -9,6 +9,8 @@ namespace FlightManager.Common
     {
         public const string AdministrationArea = "Administration";
 
+        public const string LongDateFormat = "dd/MM/yyyy HH:mm";
+
         public static class Roles
         {
             public const string Administrator = "Administrator";

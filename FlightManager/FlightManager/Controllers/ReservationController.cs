@@ -24,7 +24,7 @@ namespace FlightManager.Controllers
             return View(reservations);
         }
 
-        public IActionResult ShowDetails(int id)
+        public IActionResult Details(int id)
         {
             ReservationDetailsViewModel model = reservationService.GetOneReservation(id).To<ReservationDetailsViewModel>();
             return View(model);

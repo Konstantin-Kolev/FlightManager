@@ -25,5 +25,7 @@ namespace FlightManager.Models.Flight
         public int AvailableEconomy { get; set; }
 
         public int AvailableBussines { get; set; }
+
+        public List<Data.Entities.Reservation> Reservations { get; set; }
     }
 }

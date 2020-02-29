@@ -21,7 +21,7 @@ namespace FlightManager.Services.Contracts
 
         Task AddFlight(FlightInputModel model);
 
-        Task UpdateFlight(FlightEditInputModel model);
+        Task UpdateFlight(FlightEditInputModel model,int id);
 
         Task RemoveFlight(int id);
 

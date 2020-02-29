@@ -54,9 +54,19 @@ namespace FlightManager.Services
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateFlight(FlightEditInputModel model)
+        public async Task UpdateFlight(FlightEditInputModel model, int id)
         {
-            Flight flight = model.To<Flight>();
+            Flight flight = context.Flights.Find(id);
+            flight.Origin = model.Origin;
+            flight.Destination = model.Destination;
+            flight.AvailableBussines = model.AvailableBussines;
+            flight.AvailableEconomy = model.AvailableEconomy;
+            flight.LandingTime = model.LandingTime;
+            flight.PilotName = model.PilotName;
+            flight.PlaneNumber = model.PlaneNumber;
+            flight.PlaneType = model.PlaneType;
+            flight.TakeOffTime = model.TakeOffTime;
+
             context.Flights.Update(flight);
             await context.SaveChangesAsync();
         }

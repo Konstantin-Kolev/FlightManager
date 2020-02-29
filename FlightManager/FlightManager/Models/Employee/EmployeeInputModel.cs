@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FlightManager.Models.Employee
 {
-    public class EmployeeInputModel : IMapTo<User>, IMapFrom<User>
+    public class EmployeeInputModel : IMapTo<User>
     {
         [Required]
         public string Username { get; set; }

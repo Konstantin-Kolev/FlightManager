@@ -17,6 +17,8 @@ using FlightManager.Models;
 using System.Reflection;
 using FlightManager.Data.Seeding;
 using FlightManager.Data.Entities;
+using FlightManager.Services;
+using FlightManager.Services.Contracts;
 
 namespace FlightManager
 {
@@ -49,6 +51,8 @@ namespace FlightManager
               .AddEntityFrameworkStores<FlightManagerDbContext>()
               .AddDefaultTokenProviders();
 
+            services.AddTransient<IFlightService, FlightService>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -60,11 +64,6 @@ namespace FlightManager
             using (IServiceScope serviceScope = app.ApplicationServices.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<FlightManagerDbContext>();
-
-                if (env.IsDevelopment())
-                {
-                    dbContext.Database.Migrate();
-                }
 
                 new FlightManagerDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }

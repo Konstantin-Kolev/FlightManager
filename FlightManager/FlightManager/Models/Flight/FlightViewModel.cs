@@ -8,6 +8,8 @@ namespace FlightManager.Models.Flight
 {
     public class FlightViewModel : IMapFrom<Data.Entities.Flight>
     {
+        public int FlightId { get; set; }
+
         public string Origin { get; set; }
 
         public string Destination { get; set; }
@@ -19,6 +21,8 @@ namespace FlightManager.Models.Flight
         public int AvailableEconomy { get; set; }
 
         public int AvailableBussines { get; set; }
+
+        public string PlaneNumber { get; set; }
 
     }
 }
