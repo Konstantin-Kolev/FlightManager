@@ -25,7 +25,7 @@ namespace FlightManager.Models.Reservation
 
         public string Nationality { get; set; }
 
-        public TicketEnum TicketType { get; set; }
+        public TicketType TicketType { get; set; }
 
         public string Buyer { get; set; }
 
