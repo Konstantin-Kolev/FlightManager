@@ -53,11 +53,12 @@
                     <input asp-for="AvailableBusiness" class="form-control" disabled />
                 </div>
             </div>
+            <a class="btn btn-primary btn-lg active" role="button" asp-controller="Flight" asp-action="All">Back</a>
         </form>
     </div>
 </div>
 
-@if (Model.Reservations.Any())
+@*@if (Model.Reservations.Any())
 {
     <table class="table table-striped">
         <thead>
@@ -71,7 +72,7 @@
             </tr>
         </thead>
         <tbody>
-            @*@foreach (var reservation in Model.Reservations)
+            @foreach (var reservation in Model.Reservations)
             {
                 <tr class="row">
                     <td class="col-md-2">@reservation.FullName</td>
@@ -81,7 +82,7 @@
                     <td class="col-md-2">@reservation.Nationality</td>
                     <td class="col-md-2">@reservation.TicketType</td>
                 </tr>
-            }*@
+            }
         </tbody>
     </table>
-}
+}*@

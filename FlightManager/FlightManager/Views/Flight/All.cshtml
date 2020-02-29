@@ -28,45 +28,50 @@
             <tbody>
                 @foreach (var flight in Model)
                 {
-                <tr class="row">
-                    <td class="col-md-2">@flight.Origin</td>
-                    <td class="col-md-2">@flight.Destination</td>
-                    <td class="col-md-2">@flight.TakeOffTime.ToString(LongDateFormat)</td>
-                    <td class="col-md-1">@flight.Duration</td>
-                    <td class="col-md-1">@flight.AvailableEconomy</td>
-                    <td class="col-md-1">@flight.AvailableBusiness</td>
-                    @if (User.IsInRole(Roles.Administrator))
-                    {
-                        <td class="col-md-3">
-                            <a class="btn btn-outline-primary mx-3"
-                               asp-area="@AdministrationArea"
-                               asp-controller="Flight"
-                               asp-action="Edit"
-                               asp-route-id="@flight.Id">
-                                Edit
-                            </a>
-                            <a class="btn btn-outline-danger"
-                               asp-area="@AdministrationArea"
-                               asp-controller="Flight"
-                               asp-action="Delete"
-                               asp-route-id="@flight.Id">
-                                Delete
-                            </a>
-                        </td>
-                    }
-                    else
-                    {
-                        <td class="col-md-3">
-                            <a class="btn btn-outline-primary mx-3"
-                               asp-controller="Reservation"
-                               asp-action="Create"
-                               asp-route-flightId="@flight.Id">
-                                Buy tickets
-                            </a>
-                        </td>
-                    }
-                    
-                </tr>
+                    <tr class="row">
+                        <td class="col-md-2">@flight.Origin</td>
+                        <td class="col-md-2">@flight.Destination</td>
+                        <td class="col-md-2">@flight.TakeOffTime.ToString(LongDateFormat)</td>
+                        <td class="col-md-1">@flight.Duration</td>
+                        <td class="col-md-1">@flight.AvailableEconomy</td>
+                        <td class="col-md-1">@flight.AvailableBusiness</td>
+                        @if (User.IsInRole(Roles.Administrator))
+                        {
+                            <td class="col-md-3">
+                                <a class="btn btn-outline-primary mx-3"
+                                   asp-area="@AdministrationArea"
+                                   asp-controller="Flight"
+                                   asp-action="Edit"
+                                   asp-route-id="@flight.Id">
+                                    Edit
+                                </a>
+                                <a class="btn btn-outline-danger"
+                                   asp-area="@AdministrationArea"
+                                   asp-controller="Flight"
+                                   asp-action="Delete"
+                                   asp-route-id="@flight.Id">
+                                    Delete
+                                </a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="col-md-3">
+                                <a class="btn btn-outline-primary mx-3"
+                                   asp-controller="Reservation"
+                                   asp-action="Create"
+                                   asp-route-flightId="@flight.Id">
+                                    Buy tickets
+                                </a>
+                                <a class="btn btn-outline-primary mx-3"
+                                   asp-controller="Flight"
+                                   asp-action="Details"
+                                   asp-route-Id="@flight.Id">
+                                    Details
+                                </a>
+                            </td>
+                        }
+                    </tr>
                 }
 
             </tbody>
