@@ -20,45 +20,81 @@ namespace FlightManager.Services
             this.context = context;
         }
 
-        public async Task AddFlight(FlightInputModel model)
+        public IEnumerable<FlightViewModel> All() =>
+            context.Flights.To<FlightViewModel>().ToList();
+
+        public int AvailableBussinesTickets(int flightId) =>
+            context.Flights.Where(f => f.Id == flightId)
+            .Select(f => f.AvailableBusiness)
+            .FirstOrDefault();
+
+        public int AvailableEconomyTickets(int flightId) =>
+            context.Flights.Where(f => f.Id == flightId)
+            .Select(f => f.AvailableEconomy)
+            .FirstOrDefault();
+
+        public async Task Create(FlightInputModel model)
         {
-            var flight = model.To<Flight>();
+            Flight flight = model.To<Flight>();
+            flight.Origin = GetFlightLocation(model.Origin);
+            flight.Destination = GetFlightLocation(model.Destination);
             await context.Flights.AddAsync(flight);
             await context.SaveChangesAsync();
         }
 
-        public IEnumerable<FlightViewModel> GetAllFlights()
-        {
-            return context.Flights.Select(x => x.To<FlightViewModel>());
-        }
-
-        public IEnumerable<FlightViewModel> GetAllFlights(Expression<Func<Flight, bool>> predicate)
-        {
-            return context.Flights.Where(predicate).Select(x => x.To<FlightViewModel>());
-        }
-
-        public Flight GetOneFlight(int id)
-        {
-            return context.Flights.Find(id);
-        }
-
-        public Flight GetOneFlight(Expression<Func<Flight, bool>> predicate)
-        {
-            return context.Flights.FirstOrDefault(predicate);
-        }
-
-        public async Task RemoveFlight(int id)
+        public async Task Delete(int id)
         {
             Flight flight = context.Flights.Find(id);
+            IQueryable<Reservation> reservations = context.Reservations.Where(r => r.FlightId == id);
+            IQueryable<Passenger> passengers = reservations.SelectMany(r => r.Passengers);
+            context.Reservations.RemoveRange(reservations);
+            context.Passengers.RemoveRange(passengers);
             context.Flights.Remove(flight);
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateFlight(FlightEditInputModel model)
+        public T GetById<T>(int id) =>
+            context.Flights
+                .Where(f => f.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+
+        public async Task Update(FlightInputModel model, int id)
         {
-            Flight flight = model.To<Flight>();
+            Flight flight = context.Flights.Find(id);
+            flight.Origin = GetFlightLocation(model.Origin);
+            flight.Destination = GetFlightLocation(model.Destination);
+            flight.AvailableBusiness = model.AvailableBusiness;
+            flight.AvailableEconomy = model.AvailableEconomy;
+            flight.LandingTime = model.LandingTime;
+            flight.PilotName = model.PilotName;
+            flight.PlaneNumber = model.PlaneNumber;
+            flight.PlaneType = model.PlaneType;
+            flight.TakeOffTime = model.TakeOffTime;
+
             context.Flights.Update(flight);
             await context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAvailableTickets(int flightId, int ecenomyTickets, int businessTickets)
+        {
+            Flight flight = context.Flights.Find(flightId);
+            flight.AvailableEconomy -= ecenomyTickets;
+            flight.AvailableBusiness -= businessTickets;
+
+            context.Flights.Update(flight);
+            await context.SaveChangesAsync();
+        }
+
+        private Location GetFlightLocation(string locationName)
+        {
+            Location location = context.Locations.FirstOrDefault(l => l.Name == locationName);
+            if (location == null)
+            {
+                location = new Location { Name = locationName };
+            }
+
+            return location;
         }
     }
 }

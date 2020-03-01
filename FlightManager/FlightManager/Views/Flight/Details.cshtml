@@ -1,0 +1,102 @@
+﻿@model FlightDetailsViewModel
+@{
+    ViewData["Title"] = "Flight details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div class="d-flex justify-content-between">
+                <div class="form-group w-50 mr-2">
+                    <label asp-for="Origin"></label>
+                    <input asp-for="Origin" class="form-control" disabled />
+                </div>
+                <div class="form-group w-50 ml-2">
+                    <label asp-for="Destination"></label>
+                    <input asp-for="Destination" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="form-group w-50 mr-2">
+                    <label asp-for="TakeOffTime"></label>
+                    <input asp-for="TakeOffTime" class="form-control" disabled />
+                    <span asp-validation-for="TakeOffTime" class="text-danger"></span>
+                </div>
+                <div class="form-group w-50 ml-2">
+                    <label asp-for="Duration"></label>
+                    <input asp-for="Duration" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="form-group w-25">
+                    <label asp-for="PlaneType"></label>
+                    <input asp-for="PlaneType" class="form-control" disabled />
+                </div>
+                <div class="form-group w-25">
+                    <label asp-for="PlaneNumber"></label>
+                    <input asp-for="PlaneNumber" class="form-control" disabled />
+                </div>
+                <div class="form-group w-25">
+                    <label asp-for="PilotName"></label>
+                    <input asp-for="PilotName" class="form-control" disabled />
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="form-group w-50 mr-2">
+                    <label asp-for="AvailableEconomy"></label>
+                    <input asp-for="AvailableEconomy" class="form-control" disabled />
+                </div>
+                <div class="form-group w-50 ml-2">
+                    <label asp-for="AvailableBusiness"></label>
+                    <input asp-for="AvailableBusiness" class="form-control" disabled />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (User.IsInRole(Roles.Administrator))
+{
+    <h2>Reservations for this flight</h2>
+    @if (Model.Reservations.Any())
+    {
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr class="row">
+                    <th class="col-md-2">Name</th>
+                    <th class="col-md-2">Surname</th>
+                    <th class="col-md-2">Email</th>
+                    <th class="col-md-2">Nationality</th>
+                    <th class="col-md-2">Ticket type</th>
+                    <th class="col-md-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in Model.Reservations)
+                {
+                    <tr class="row">
+                        @foreach (var passenger in reservation.Passengers)
+                        {
+                        <td class="col-md-2">@passenger.Name</td>
+                        <td class="col-md-2">@passenger.Surname</td>
+                        <td class="col-md-2">@passenger.Email</td>
+                        <td class="col-md-2">@passenger.Nationality</td>
+                        <td class="col-md-2">@passenger.TicketType</td>
+                        }
+                        <td class="col-md-2">
+                            <a class="btn btn-primary btn-sm" role="button"
+                               asp-controller="Reservation"
+                               asp-action="Details"
+                               asp-route-id="@reservation.Id">
+                                Reservation Details
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+<a class="btn btn-primary active" role="button" asp-controller="Flight" asp-action="All">Back</a>

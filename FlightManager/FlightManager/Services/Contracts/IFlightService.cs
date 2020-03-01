@@ -11,19 +11,20 @@ namespace FlightManager.Services.Contracts
     public interface IFlightService
     {
 
-        IEnumerable<FlightViewModel> GetAllFlights();
+        Task Create(FlightInputModel model);
 
-        IEnumerable<FlightViewModel> GetAllFlights(Expression<Func<Flight, bool>> predicate);
+        Task Update(FlightInputModel model, int id);
 
-        Flight GetOneFlight(int id);
+        IEnumerable<FlightViewModel> All();
 
-        Flight GetOneFlight(Expression<Func<Flight, bool>> predicate);
+        T GetById<T>(int id);
 
-        Task AddFlight(FlightInputModel model);
+        Task Delete(int id);
+        int AvailableEconomyTickets(int flightId);
 
-        Task UpdateFlight(FlightEditInputModel model);
+        int AvailableBussinesTickets(int flightId);
 
-        Task RemoveFlight(int id);
+        Task UpdateAvailableTickets(int flightId, int ecenomyTickets, int bussinesTickets);
 
     }
 }

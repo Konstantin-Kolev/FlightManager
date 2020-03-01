@@ -1,6 +1,7 @@
 ﻿using FlightManager.Data.Enumeration;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,28 +9,23 @@ namespace FlightManager.Data.Entities
 {
     public class Reservation
     {
-        public int ReservationId { get; set; }
+        public Reservation()
+        {
+            Passengers = new HashSet<Passenger>();
+            CreatedOn = DateTime.Now;
+        }
 
-        public string Name { get; set; }
+        public int Id { get; set; }
 
-        public string MiddleName { get; set; }
+        [Required]
+        public string ClientId { get; set; }
+        public Client Client { get; set; }
 
-        public string Surname { get; set; }
-
-        public string Email { get; set; }
-
-        public string PersonalNumber { get; set; }
-
-        public string PhoneNumber { get; set; }
-
-        public string Nationality { get; set; }
-
-        public TicketEnum TicketType { get; set; }
-
-        public string Buyer { get; set; }
+        public DateTime CreatedOn { get; set; }
 
         public int FlightId { get; set; }
-
         public Flight Flight { get; set; }
+
+        public ICollection<Passenger> Passengers { get; set; }
     }
 }

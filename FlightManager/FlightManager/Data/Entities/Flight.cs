@@ -7,11 +7,18 @@ namespace FlightManager.Data.Entities
 {
     public class Flight
     {
-        public int FlightId { get; set; }
+        public Flight()
+        {
+            Reservations = new HashSet<Reservation>();
+        }
 
-        public string Origin { get; set; }
+        public int Id { get; set; }
 
-        public string Destination { get; set; }
+        public int OriginId { get; set; }
+        public Location Origin { get; set; }
+
+        public int DestinationId { get; set; }
+        public Location Destination { get; set; }
 
         public DateTime TakeOffTime { get; set; }
 
@@ -25,8 +32,8 @@ namespace FlightManager.Data.Entities
 
         public int AvailableEconomy { get; set; }
 
-        public int AvailableBussines { get; set; }
+        public int AvailableBusiness { get; set; }
 
-        public List<Reservation> Reservations { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
     }
 }

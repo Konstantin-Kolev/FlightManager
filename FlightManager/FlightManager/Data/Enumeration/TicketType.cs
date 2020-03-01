@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlightManager.Data.Enumeration
 {
-    public enum TicketEnum
+    public enum TicketType
     {
         Economy,
         Bussines

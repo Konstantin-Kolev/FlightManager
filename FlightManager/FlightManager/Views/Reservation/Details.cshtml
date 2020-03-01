@@ -1,0 +1,53 @@
+﻿@model ReservationViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Flight reservation</h1>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <h4>Client info</h4>
+            <div class="form-group w-25">
+                <label asp-for="ClientEmail">Client email</label>
+                <input asp-for="ClientEmail" class="form-control" disabled />
+            </div>
+            <hr />
+            <h4>Passangers</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr class="row">
+                        <th class="col-md-2">Name</th>
+                        <th class="col-md-2">Middle Name</th>
+                        <th class="col-md-2">Surname</th>
+                        <th class="col-md-2">Persona number</th>
+                        <th class="col-md-2">Email</th>
+                        <th class="col-md-2">Phone number</th>
+                        <th class="col-md-2">Nationality</th>
+                        <th class="col-md-2">Ticket type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var passenger in Model.Passengers)
+                    {
+                        <tr class="row">
+                            <td class="col-md-2">@passenger.Name</td>
+                            <td class="col-md-2">@passenger.MiddleName</td>
+                            <td class="col-md-2">@passenger.Surname</td>
+                            <td class="col-md-2">@passenger.PersonalNumber</td>
+                            <td class="col-md-2">@passenger.Email</td>
+                            <td class="col-md-2">@passenger.PhoneNumber</td>
+                            <td class="col-md-2">@passenger.Nationality</td>
+                            <td class="col-md-2">@passenger.TicketType</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="form-group">
+                <a class="btn btn-primary" role="button" asp-controller="Flight" asp-action="Details" asp-route-id="@Model.FlightId">Back</a>
+            </div>
+        </form>
+    </div>
+</div>

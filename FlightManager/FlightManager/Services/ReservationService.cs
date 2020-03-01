@@ -2,7 +2,7 @@
 using FlightManager.Data.Entities;
 using FlightManager.Models.Reservation;
 using FlightManager.Services.Mappings;
-using ReservationManager.Services.Contracts;
+using FlightManager.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,45 +20,44 @@ namespace FlightManager.Services
             this.context = context;
         }
 
-        public async Task AddReservation(ReservationInputModel model)
+        public async Task Create(ReservationInputModel model)
         {
             Reservation reservation = model.To<Reservation>();
-            await context.AddAsync(reservation);
+            Client client = GetReservationClient(model.Client.Email);
+            //Check if client has already been added to the database
+            if (client != null)
+            {
+                reservation.Client = client;
+            }
+
+            foreach (ReservationPassengerInputModel passanger in model.Passengers)
+            {
+                reservation.Passengers.Add(GetReservationPassanger(passanger));
+            }
+
+            await context.Reservations.AddAsync(reservation);
             await context.SaveChangesAsync();
         }
 
-        public IEnumerable<ReservationViewModel> GetAllReservations()
-        {
-            return context.Reservations.Select(x => x.To<ReservationViewModel>());
-        }
+        public T GetById<T>(int id) =>
+            context.Reservations
+                .Where(r => r.Id == id)
+                .To<T>()
+                .FirstOrDefault();
 
-        public IEnumerable<ReservationViewModel> GetAllReservations(Expression<Func<Reservation, bool>> predicate)
-        {
-            return context.Reservations.Where(predicate).Select(x => x.To<ReservationViewModel>());
-        }
+        public Client GetReservationClient(string clientEmail) =>
+            context.Clients.FirstOrDefault(c => c.Email == clientEmail);
 
-        public Reservation GetOneReservation(int id)
+        public Passenger GetReservationPassanger(ReservationPassengerInputModel model)
         {
-            return context.Reservations.Find(id);
-        }
+            //Check if passanger has already been added to the database
+            Passenger passanger = context.Passengers
+                .FirstOrDefault(c =>
+                c.PersonalNumber == model.PersonalNumber &&
+                c.Email == model.Email &&
+                c.PhoneNumber == model.PhoneNumber);
 
-        public Reservation GetOneReservation(Expression<Func<Reservation, bool>> predicate)
-        {
-            return context.Reservations.FirstOrDefault(predicate);
-        }
-
-        public async Task RemoveReservation(int id)
-        {
-            Reservation reservation = context.Reservations.Find(id);
-            context.Reservations.Remove(reservation);
-            await context.SaveChangesAsync();
-        }
-
-        public async Task UpdateReservation(ReservationEditInputModel model)
-        {
-            Reservation reservation = model.To<Reservation>();
-            context.Reservations.Update(reservation);
-            await context.SaveChangesAsync();
+            return passanger ?? model.To<Passenger>();
         }
     }
 }

@@ -13,10 +13,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FlightManager.Services.Mappings;
-using FlightManager.Models;
 using System.Reflection;
 using FlightManager.Data.Seeding;
 using FlightManager.Data.Entities;
+using FlightManager.Services;
+using FlightManager.Services.Contracts;
+using FlightManager.Models.Flight;
 
 namespace FlightManager
 {
@@ -49,6 +51,9 @@ namespace FlightManager
               .AddEntityFrameworkStores<FlightManagerDbContext>()
               .AddDefaultTokenProviders();
 
+            services.AddTransient<IFlightService, FlightService>();
+            services.AddTransient<IReservationService, ReservationService>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -61,15 +66,10 @@ namespace FlightManager
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<FlightManagerDbContext>();
 
-                if (env.IsDevelopment())
-                {
-                    dbContext.Database.Migrate();
-                }
-
                 new FlightManagerDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
 
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(FlightViewModel).GetTypeInfo().Assembly);
 
             if (env.IsDevelopment())
             {

@@ -18,58 +18,12 @@ namespace FlightManager.Controllers
             this.flightService = flightService;
         }
 
-        public IActionResult All()
+        public IActionResult All() => View(flightService.All());
+
+        public IActionResult Details(int id)
         {
-            IEnumerable<FlightViewModel> flights = flightService.GetAllFlights();
-
-            return View(flights);
-        }
-
-        public IActionResult ShowDetails(int id)
-        {
-            FlightDetailsViewModel model = flightService.GetOneFlight(id).To<FlightDetailsViewModel>();
-
+            FlightDetailsViewModel model = flightService.GetById<FlightDetailsViewModel>(id);
             return View(model);
-        }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create(FlightInputModel model)
-        {
-            flightService.AddFlight(model);
-            return Redirect("/");
-        }
-
-        public IActionResult Edit(int id)
-        {
-            FlightEditInputModel model = flightService.GetOneFlight(id).To<FlightEditInputModel>();
-            return View(model);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(FlightEditInputModel model)
-        {
-            flightService.UpdateFlight(model);
-
-            return Redirect("/");
-        }
-
-        public IActionResult Delete(int id)
-        {
-            FlightDetailsViewModel model = flightService.GetOneFlight(id).To<FlightDetailsViewModel>();
-            return View(model);
-        }
-
-        [HttpPost]
-        [ActionName(nameof(Delete))]
-        public IActionResult DeleteConfirm(int id)
-        {
-            flightService.RemoveFlight(id);
-            return Redirect("/");
         }
     }
 }

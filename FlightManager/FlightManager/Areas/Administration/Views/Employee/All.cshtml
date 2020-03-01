@@ -43,19 +43,26 @@
                         <td class="col-md-2">@employee.Surname</td>
                         <td class="col-md-2">@employee.PersonalNumber</td>
                         <td class="col-md-3">
-                            <a class="btn btn-outline-primary mx-3"
+                            <a class="btn btn-outline-primary btn-sm mx-3"
                                asp-area="@AdministrationArea"
                                asp-controller="Employee"
                                asp-action="Edit"
                                asp-route-id="@employee.Id">
                                 Edit
                             </a>
-                            <a class="btn btn-outline-danger"
+                            <a class="btn btn-outline-danger btn-sm"
                                asp-area="@AdministrationArea"
                                asp-controller="Employee"
                                asp-action="Delete"
                                asp-route-id="@employee.Id">
                                 Delete
+                            </a>
+                            <a class="btn btn-outline-primary btn-sm mx-3"
+                               asp-area="@AdministrationArea"
+                               asp-controller="Employee"
+                               asp-action="Details"
+                               asp-route-id="@employee.Id">
+                                Details
                             </a>
                         </td>
                     </tr>
